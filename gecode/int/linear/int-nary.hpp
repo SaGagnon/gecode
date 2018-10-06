@@ -390,6 +390,26 @@ namespace Gecode { namespace Int { namespace Linear {
   }
 
   template<class Val, class P, class N>
+  void
+  Eq<Val,P,N>::solndistrib(Space& home, Propagator::SendMarginal send,
+                           Propagator::SolnDistribCalc sdc) const {
+    cbslinear(home,this->id(),send,x,y,c,c);
+  };
+
+  template<class Val, class P, class N>
+  void
+  Eq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
+                             unsigned int& size_b) const {
+    nonAssignedSize(in, x, y, size, size_b);
+  };
+
+  template<class Val, class P, class N>
+  void
+  Eq<Val,P,N>::mindom(Propagator::InDecision in, unsigned int& min) const {
+    cbsmindom(in, x, y, min);
+  };
+
+  template<class Val, class P, class N>
   ExecStatus
   Eq<Val,P,N>::propagate(Space& home, const ModEventDelta& med) {
     return prop_bnd<Val,P,N>(home,med,*this,x,y,c);
@@ -739,6 +759,33 @@ namespace Gecode { namespace Int { namespace Linear {
     }
     return new (home) Lq<Val,P,N>(home,*this);
   }
+
+  template<class Val, class P, class N>
+  void
+  Lq<Val,P,N>::solndistrib(Space& home, Propagator::SendMarginal send,
+                           Propagator::SolnDistribCalc sdc) const {
+    int lb=0;
+    for (int i=0; i<x.size(); i++)
+      lb += x[i].min();
+    for (int i=0; i<y.size(); i++)
+      lb -= y[i].max();
+
+    lb /= x.size() + y.size();
+    cbslinear(home,this->id(),send,x,y,lb,c);
+  };
+
+  template<class Val, class P, class N>
+  void
+  Lq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
+                             unsigned int& size_b) const {
+    nonAssignedSize(in, x, y, size, size_b);
+  };
+
+  template<class Val, class P, class N>
+  void
+  Lq<Val,P,N>::mindom(Propagator::InDecision in, unsigned int& min) const {
+    cbsmindom(in, x, y, min);
+  };
 
   template<class Val, class P, class N>
   ExecStatus
