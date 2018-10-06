@@ -587,6 +587,13 @@ namespace Gecode { namespace Int { namespace Linear {
     Eq(Home home, ViewArray<P>& x, ViewArray<N>& y, Val c);
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
+    /// Counting base search densities computation for branching
+    virtual void solndistrib(Space& home, Propagator::SendMarginal send,
+                             Propagator::SolnDistribCalc sdc) const;
+    /// TODO: Comment
+    virtual void domainsizesum(Propagator::InDecision in,
+                               unsigned int& size, unsigned int& size_b) const;
+    virtual void mindom(Propagator::InDecision in, unsigned int& min) const;
     /// Perform propagation
     virtual ExecStatus propagate(Space& home, const ModEventDelta& med);
     /// Post propagator for \f$\sum_{i=0}^{|x|-1}x_i-\sum_{i=0}^{|y|-1}y_i=c\f$
@@ -726,6 +733,13 @@ namespace Gecode { namespace Int { namespace Linear {
     Lq(Home home, ViewArray<P>& x, ViewArray<N>& y, Val c);
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
+    /// Counting base search densities computation for branching
+    virtual void solndistrib(Space& home, Propagator::SendMarginal send,
+                             Propagator::SolnDistribCalc sdc) const;
+    /// TODO: Comment
+    virtual void domainsizesum(Propagator::InDecision in, unsigned int& size,
+                               unsigned int& size_b) const;
+    virtual void mindom(Propagator::InDecision in, unsigned int& min) const;
     /// Perform propagation
     virtual ExecStatus propagate(Space& home, const ModEventDelta& med);
     /// Post propagator for \f$\sum_{i=0}^{|x|-1}x_i-\sum_{i=0}^{|y|-1}y_i\leq c\f$
@@ -769,6 +783,7 @@ namespace Gecode { namespace Int { namespace Linear {
 
 }}}
 
+#include <gecode/int/linear/cbs.hpp>
 #include <gecode/int/linear/int-nary.hpp>
 #include <gecode/int/linear/int-dom.hpp>
 
