@@ -588,8 +588,7 @@ namespace Gecode { namespace Int { namespace Linear {
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
     /// Counting base search densities computation for branching
-    virtual void solndistrib(Space& home, Propagator::SendMarginal send,
-                             Propagator::SolnDistribCalc sdc) const;
+    virtual void solndistrib(Space& home, Propagator::SendMarginal send) const;
     /// TODO: Comment
     virtual void domainsizesum(Propagator::InDecision in,
                                unsigned int& size, unsigned int& size_b) const;
@@ -734,8 +733,7 @@ namespace Gecode { namespace Int { namespace Linear {
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
     /// Counting base search densities computation for branching
-    virtual void solndistrib(Space& home, Propagator::SendMarginal send,
-                             Propagator::SolnDistribCalc sdc) const;
+    virtual void solndistrib(Space& home, Propagator::SendMarginal send) const;
     /// TODO: Comment
     virtual void domainsizesum(Propagator::InDecision in, unsigned int& size,
                                unsigned int& size_b) const;

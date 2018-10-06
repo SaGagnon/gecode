@@ -183,7 +183,7 @@ template<class View>
                         Propagator::SendMarginal send,
                         double mean, double variance) {
     // For every variable in the domain of ViewArray viewArray
-    Region r(home);
+    Region r;
     ViewArray<View> viewArray(r,a);
 
     QSComparator<View> comp;
