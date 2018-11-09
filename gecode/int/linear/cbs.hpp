@@ -36,29 +36,6 @@ namespace Gecode { namespace Int { namespace Linear {
 
   class NoView;
 
-  template<class P, class N>
-  forceinline void
-  cbssize(Propagator::InDecision in,
-                  const ViewArray<P>& x, const ViewArray<N>& y,
-                  unsigned int& size, unsigned int& size_b) {
-    size = 0;
-    size_b = 0;
-    for (int i=0; i<x.size(); i++) {
-      if (!x[i].assigned()) {
-        size += x[i].size();
-        if (in(x[i].id()))
-          size_b += x[i].size();
-      }
-    }
-    for (int i=0; i<y.size(); i++) {
-      if (!y[i].assigned()) {
-        size += y[i].size();
-        if (in(y[i].id()))
-          size_b += y[i].size();
-      }
-    }
-  }
-
   template<class View>
   forceinline double
   domainMean(const View& x) {
@@ -209,8 +186,12 @@ namespace Gecode { namespace Int { namespace Linear {
 
   template<class P, class N>
   void
-  cbslinear(Space& home, unsigned int prop_id, Propagator::SendMarginal send,
-            const ViewArray<P>& x, const ViewArray<N>& y, int lb, int ub) {
+  cbslinear(Space& home, unsigned int prop_id,
+            const ViewArray<P>& x,
+            const ViewArray<N>& y,
+            int lb,
+            int ub,
+            Propagator::SendMarginal send) {
     // Mean and variance of the distribution
     double mean, variance;
     MV_dist(lb, ub, x, y, mean, variance);
@@ -218,5 +199,31 @@ namespace Gecode { namespace Int { namespace Linear {
     approx_dens_for_array(home,prop_id,x,true,send,mean,variance);
     approx_dens_for_array(home,prop_id,y,false,send,mean,variance);
   }
+
+
+  template<class P, class N>
+  forceinline void
+  cbssize(const ViewArray<P>& x,
+          const ViewArray<N>& y,
+          Propagator::InDecision in,
+          unsigned int& size, unsigned int& size_b) {
+    size = 0;
+    size_b = 0;
+    for (int i=0; i<x.size(); i++) {
+      if (!x[i].assigned()) {
+        size += x[i].size();
+        if (in(x[i].id()))
+          size_b += x[i].size();
+      }
+    }
+    for (int i=0; i<y.size(); i++) {
+      if (!y[i].assigned()) {
+        size += y[i].size();
+        if (in(y[i].id()))
+          size_b += y[i].size();
+      }
+    }
+  }
+
 
 }}}

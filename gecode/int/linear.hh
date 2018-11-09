@@ -616,12 +616,18 @@ namespace Gecode { namespace Int { namespace Linear {
        *                 Artificial Intelligence, and Operations Research, pp.203-217
        *        Available at http://www.polymtl.ca/labo-quosseca/en/publications
        */
-      template<class View>
-      void cbslinear(Space& home, unsigned int prop_id, const ViewArray<View>& x,
+      template<class P, class N>
+      void cbslinear(Space& home, unsigned int prop_id,
+                     const ViewArray<P>& x,
+                     const ViewArray<N>& y,
+                     int lb,
+                     int ub,
                      Propagator::SendMarginal send);
 
-      template<class View>
-      void cbssize(const ViewArray<View>& x, Propagator::InDecision in,
+      template<class P, class N>
+      void cbssize(const ViewArray<P>& x,
+                   const ViewArray<N>& y,
+                   Propagator::InDecision in,
                    unsigned int& size, unsigned int& size_b);
 #endif
 

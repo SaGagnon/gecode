@@ -398,14 +398,14 @@ namespace Gecode { namespace Int { namespace Linear {
   template<class Val, class P, class N>
   void
   Eq<Val,P,N>::solndistrib(Space& home, Propagator::SendMarginal send) const {
-    cbslinear(home,this->id(),send,x,y,c,c);
+    cbslinear(home,this->id(),x,y,c,c,send);
   };
 
   template<class Val, class P, class N>
   void
   Eq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
                              unsigned int& size_b) const {
-    cbssize(in, x, y, size, size_b);
+    cbssize(x, y, in, size, size_b);
   };
 #endif
 
@@ -771,14 +771,14 @@ namespace Gecode { namespace Int { namespace Linear {
       lb -= y[i].max();
 
     lb /= x.size() + y.size();
-    cbslinear(home,this->id(),send,x,y,lb,c);
+    cbslinear(home,this->id(),x,y,lb,c,send);
   };
 
   template<class Val, class P, class N>
   void
   Lq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
                              unsigned int& size_b) const {
-    cbssize(in, x, y, size, size_b);
+    cbssize(x, y, in, size, size_b);
   };
 #endif
 
