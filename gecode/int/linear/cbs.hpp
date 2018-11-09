@@ -1,5 +1,11 @@
 /* -*- mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*- */
 /*
+ *  Main authors:
+ *     Samuel Gagnon <samuel.gagnon92@gmail.com>
+ *
+ *  Copyright:
+ *     Samuel Gagnon, 2018
+ *
  *  This file is part of Gecode, the generic constraint
  *  development environment:
  *     http://www.gecode.org
