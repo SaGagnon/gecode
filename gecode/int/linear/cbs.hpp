@@ -32,7 +32,7 @@ namespace Gecode { namespace Int { namespace Linear {
 
   template<class P, class N>
   forceinline void
-  nonAssignedSize(Propagator::InDecision in,
+  cbssize(Propagator::InDecision in,
                   const ViewArray<P>& x, const ViewArray<N>& y,
                   unsigned int& size, unsigned int& size_b) {
     size = 0;

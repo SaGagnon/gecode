@@ -401,7 +401,7 @@ namespace Gecode { namespace Int { namespace Linear {
   void
   Eq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
                              unsigned int& size_b) const {
-    nonAssignedSize(in, x, y, size, size_b);
+    cbssize(in, x, y, size, size_b);
   };
 #endif
 
@@ -774,7 +774,7 @@ namespace Gecode { namespace Int { namespace Linear {
   void
   Lq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
                              unsigned int& size_b) const {
-    nonAssignedSize(in, x, y, size, size_b);
+    cbssize(in, x, y, size, size_b);
   };
 #endif
 
