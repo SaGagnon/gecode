@@ -601,6 +601,27 @@ namespace Gecode { namespace Int { namespace Linear {
     post(Home home, ViewArray<P>& x, ViewArray<N>& y, Val c);
   };
 
+#ifdef GECODE_HAS_CBS
+      /**
+       * \brief Solution distribution computation for the linear constraint
+       *
+       * The algorithm is taken from:
+       *        Pesant, Gilles & Quimper, Claude-Guy. (2008).
+       *        Counting Solutions of Knapsack Constraints
+       *        In book: Integration of Constraint Programming,
+       *                 Artificial Intelligence, and Operations Research, pp.203-217
+       *        Available at http://www.polymtl.ca/labo-quosseca/en/publications
+       */
+      template<class View>
+      void cbslinear(Space& home, unsigned int prop_id, const ViewArray<View>& x,
+                     Propagator::SendMarginal send);
+
+      template<class View>
+      void cbssize(const ViewArray<View>& x, Propagator::InDecision in,
+                   unsigned int& size, unsigned int& size_b);
+#endif
+
+
   /**
    * \brief %Propagator for domain consistent n-ary linear equality
    *
