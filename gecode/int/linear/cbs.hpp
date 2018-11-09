@@ -155,61 +155,43 @@ namespace Gecode { namespace Int { namespace Linear {
     QSComparator<View> comp;
     Support::quicksort(&viewArray[0],viewArray.size(),comp);
 
-    std::vector<Record> backup;
-    {
-      unsigned int maxDomSize = 0;
-      for (int i = 0; i < viewArray.size(); i++)
-        if (viewArray[i].size() > maxDomSize)
-          maxDomSize = viewArray[i].size();
-      backup.reserve(maxDomSize);
-    }
-
     for (int i = 0; i < viewArray.size(); i++) {
       if (viewArray[i].assigned()) continue;
-      if (i == 0 || !comp(viewArray[i], viewArray[i - 1], true)) {
-        backup.resize(0);
-        double mean_i, variance_i;
-        {
-          double _mean = domainMean(viewArray[i]);
-          double _variance = domainVariance(viewArray[i], _mean);
-          mean_i = P ? mean + _mean : mean - _mean;
-          variance_i = variance - _variance;
-        }
+      double mean_i, variance_i;
+      {
+        double _mean = domainMean(viewArray[i]);
+        double _variance = domainVariance(viewArray[i], _mean);
+        mean_i = P ? mean + _mean : mean - _mean;
+        variance_i = variance - _variance;
+      }
 
-        // Probability mass for each value in viewArray[i]
-//      Region r(home);
-        double *approx_dens_a = r.alloc<double>((int) viewArray[i].size());
-        double approx_sum = 0;
-        {
-          int j = 0;
-          for (ViewValues<View> val(viewArray[i]); val(); ++val) {
-            int v = P ? val.val() : -val.val();
-            if (variance_i == 0)
-              approx_dens_a[j] = 1;
-            else
-              approx_dens_a[j] = exp(
-                -std::pow(v - mean_i, 2) / (2 * variance_i));
-            approx_sum += approx_dens_a[j];
-            j++;
-          }
+      // Probability mass for each value in viewArray[i]
+      //      Region r(home);
+      double *approx_dens_a = r.alloc<double>((int) viewArray[i].size());
+      double approx_sum = 0;
+      {
+        int j = 0;
+        for (ViewValues<View> val(viewArray[i]); val(); ++val) {
+          int v = P ? val.val() : -val.val();
+          if (variance_i == 0)
+            approx_dens_a[j] = 1;
+          else
+            approx_dens_a[j] = exp(
+                                   -std::pow(v - mean_i, 2) / (2 * variance_i));
+          approx_sum += approx_dens_a[j];
+          j++;
         }
+      }
 
-        // Normalization and assignation
-        {
-          int j = 0;
-          for (ViewValues<View> val(viewArray[i]); val(); ++val) {
-            Record r;
-            r.val = viewArray[i].baseval(val.val());
-            r.dens = approx_dens_a[j] / approx_sum;
-            send(prop_id, viewArray[i].id(), r.val, r.dens);
-            backup.push_back(r);
-            j++;
-          }
-        }
-      } else {
-        for (int j=0; j<backup.size(); j++) {
-          send(prop_id, viewArray[i].id(), backup[j].val,
-                             backup[j].dens);
+      // Normalization and assignation
+      {
+        int j = 0;
+        for (ViewValues<View> val(viewArray[i]); val(); ++val) {
+          Record r;
+          r.val = viewArray[i].baseval(val.val());
+          r.dens = approx_dens_a[j] / approx_sum;
+          send(prop_id, viewArray[i].id(), r.val, r.dens);
+          j++;
         }
       }
     }
