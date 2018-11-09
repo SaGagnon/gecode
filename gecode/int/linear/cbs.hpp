@@ -53,18 +53,6 @@ namespace Gecode { namespace Int { namespace Linear {
     }
   }
 
-template<class View>
-  forceinline double
-  boundsMean(const View& x) {
-    return (x.min() + x.max())/2;
-  }
-
-  template<>
-  forceinline double
-  boundsMean(const NoView&) {
-    return 0;
-  }
-
   template<class View>
   forceinline double
   domainMean(const View& x) {
