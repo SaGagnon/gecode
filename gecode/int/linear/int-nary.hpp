@@ -389,6 +389,8 @@ namespace Gecode { namespace Int { namespace Linear {
     return new (home) Eq<Val,P,N>(home,*this);
   }
 
+
+#ifdef GECODE_HAS_CBS
   template<class Val, class P, class N>
   void
   Eq<Val,P,N>::solndistrib(Space& home, Propagator::SendMarginal send) const {
@@ -401,6 +403,7 @@ namespace Gecode { namespace Int { namespace Linear {
                              unsigned int& size_b) const {
     nonAssignedSize(in, x, y, size, size_b);
   };
+#endif
 
   template<class Val, class P, class N>
   ExecStatus
@@ -753,6 +756,7 @@ namespace Gecode { namespace Int { namespace Linear {
     return new (home) Lq<Val,P,N>(home,*this);
   }
 
+#ifdef GECODE_HAS_CBS
   template<class Val, class P, class N>
   void
   Lq<Val,P,N>::solndistrib(Space& home, Propagator::SendMarginal send) const {
@@ -772,6 +776,7 @@ namespace Gecode { namespace Int { namespace Linear {
                              unsigned int& size_b) const {
     nonAssignedSize(in, x, y, size, size_b);
   };
+#endif
 
   template<class Val, class P, class N>
   ExecStatus
