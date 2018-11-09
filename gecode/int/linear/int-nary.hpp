@@ -403,12 +403,6 @@ namespace Gecode { namespace Int { namespace Linear {
   };
 
   template<class Val, class P, class N>
-  void
-  Eq<Val,P,N>::mindom(Propagator::InDecision in, unsigned int& min) const {
-    cbsmindom(in, x, y, min);
-  };
-
-  template<class Val, class P, class N>
   ExecStatus
   Eq<Val,P,N>::propagate(Space& home, const ModEventDelta& med) {
     return prop_bnd<Val,P,N>(home,med,*this,x,y,c);
@@ -777,12 +771,6 @@ namespace Gecode { namespace Int { namespace Linear {
   Lq<Val,P,N>::domainsizesum(Propagator::InDecision in, unsigned int& size,
                              unsigned int& size_b) const {
     nonAssignedSize(in, x, y, size, size_b);
-  };
-
-  template<class Val, class P, class N>
-  void
-  Lq<Val,P,N>::mindom(Propagator::InDecision in, unsigned int& min) const {
-    cbsmindom(in, x, y, min);
   };
 
   template<class Val, class P, class N>
