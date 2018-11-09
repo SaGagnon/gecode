@@ -164,11 +164,8 @@ namespace Gecode { namespace Int { namespace Linear {
       backup.reserve(maxDomSize);
     }
 
-//    unsigned int _reuse_count = 0;
     for (int i = 0; i < viewArray.size(); i++) {
       if (viewArray[i].assigned()) continue;
-//      if(!dist->compute(viewArray[i].id())) continue;
-
       if (i == 0 || !comp(viewArray[i], viewArray[i - 1], true)) {
         backup.resize(0);
         double mean_i, variance_i;
@@ -210,14 +207,12 @@ namespace Gecode { namespace Int { namespace Linear {
           }
         }
       } else {
-//        _reuse_count++;
         for (int j=0; j<backup.size(); j++) {
           send(prop_id, viewArray[i].id(), backup[j].val,
                              backup[j].dens);
         }
       }
     }
-//    std::cout << (double)_reuse_count / viewArray.size() << std::endl;
   }
 
   template<> forceinline void
@@ -228,25 +223,6 @@ namespace Gecode { namespace Int { namespace Linear {
   void
   cbslinear(Space& home, unsigned int prop_id, Propagator::SendMarginal send,
             const ViewArray<P>& x, const ViewArray<N>& y, int lb, int ub) {
-//    {
-//      bool compute = false;
-//      for (int i=0; i<x.size(); i++) {
-//        if (x[i].assigned() && dist->compute(x[i].id())) {
-//          compute = true;
-//          break;
-//        }
-//      }
-//      if (!compute) {
-//        for (int i=0; i<y.size(); i++) {
-//          if (y[i].assigned() && dist->compute(y[i].id())) {
-//            compute = true;
-//            break;
-//          }
-//        }
-//      }
-//      if (!compute) return;
-//    }
-
     // Mean and variance of the distribution
     double mean, variance;
     MV_dist(lb, ub, x, y, mean, variance);
