@@ -587,11 +587,13 @@ namespace Gecode { namespace Int { namespace Linear {
     Eq(Home home, ViewArray<P>& x, ViewArray<N>& y, Val c);
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
-    /// Counting base search densities computation for branching
+#ifdef GECODE_HAS_CBS
+    /// Solution distribution computation for branching
     virtual void solndistrib(Space& home, Propagator::SendMarginal send) const;
-    /// TODO: Comment
+    /// Sum of variables cardinalities
     virtual void domainsizesum(Propagator::InDecision in,
                                unsigned int& size, unsigned int& size_b) const;
+#endif
     virtual void mindom(Propagator::InDecision in, unsigned int& min) const;
     /// Perform propagation
     virtual ExecStatus propagate(Space& home, const ModEventDelta& med);
@@ -732,11 +734,13 @@ namespace Gecode { namespace Int { namespace Linear {
     Lq(Home home, ViewArray<P>& x, ViewArray<N>& y, Val c);
     /// Create copy during cloning
     virtual Actor* copy(Space& home);
-    /// Counting base search densities computation for branching
+#ifdef GECODE_HAS_CBS
+    /// Solution distribution computation for branching
     virtual void solndistrib(Space& home, Propagator::SendMarginal send) const;
-    /// TODO: Comment
+    /// Sum of variables cardinalities
     virtual void domainsizesum(Propagator::InDecision in, unsigned int& size,
                                unsigned int& size_b) const;
+#endif
     virtual void mindom(Propagator::InDecision in, unsigned int& min) const;
     /// Perform propagation
     virtual ExecStatus propagate(Space& home, const ModEventDelta& med);
